@@ -7,6 +7,12 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        ref: fanchmwrtt-25.12.4
+        fetch-depth: 1
+
     - name: Space cleanup
       run: |
         sudo rm -rf /usr/share/dotnet
