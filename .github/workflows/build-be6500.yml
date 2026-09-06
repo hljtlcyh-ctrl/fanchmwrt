@@ -34,8 +34,6 @@ jobs:
           CONFIG_CCACHE=y
           EOF
           make defconfig
-          cp .config .config.old
-          make oldconfig
           grep CONFIG_TARGET_ipq53xx .config
           grep CONFIG_TARGET_ipq53xx_generic_DEVICE_jdcloud_be6500 .config
 
