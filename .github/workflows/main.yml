@@ -13,7 +13,6 @@ jobs:
           sudo rm -rf /opt/ghc
           sudo rm -rf "/usr/local/share/boost"
           sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-
       - name: 拉取源码
         uses: actions/checkout@v4
 
@@ -21,21 +20,19 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y build-essential flex bison git libncurses-dev gawk unzip libssl-dev python3-distutils rsync ccache
-
       - name: 更新feeds
         run: |
           ./scripts/feeds update -a
           ./scripts/feeds install -a
-
       - name: 写入配置
         run: |
           cat > .config <<'EOF'
-CONFIG_TARGET_ipq53xx=y
-CONFIG_TARGET_ipq53xx_generic=y
-CONFIG_TARGET_ipq53xx_generic_DEVICE_jdcloud_be6500=y
-CONFIG_DEVEL=y
-CONFIG_CCACHE=y
-EOF
+          CONFIG_TARGET_ipq53xx=y
+          CONFIG_TARGET_ipq53xx_generic=y
+          CONFIG_TARGET_ipq53xx_generic_DEVICE_jdcloud_be6500=y
+          CONFIG_DEVEL=y
+          CONFIG_CCACHE=y
+          EOF
           make defconfig
 
       - name: 下载源码包
@@ -44,9 +41,8 @@ EOF
       - name: 编译固件
         run: |
           make -j$(nproc) V=s || make -j1 V=s
-
       - name: 上传固件
         uses: actions/upload-artifact@v4
         with:
-          name: BE6500‑firmware
+          name: BE6500-firmware
           path: bin/targets/ipq53xx/generic/*.bin
